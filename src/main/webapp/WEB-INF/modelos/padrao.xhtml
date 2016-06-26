@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:head>
+        <title>Biblioteca da Vovó</title>
+        <!--<h:outputStylesheet name="/webjars/font-awesome/4.4.0/css/font-awesome.css"/>-->
+        <link rel="stylesheet" href="webjars/font-awesome/4.4.0/css/font-awesome.css"></link>
+    </h:head>
+
+    <h:body>
+        <h:outputStylesheet library ="CSS" name="primefacesOverride.css"/>
+
+        <p:layout style="min-width:400px; min-height:500px;" fullPage="true">
+
+            <p:layoutUnit style="border:0px solid white; text-align: center;" position="north" resizable="true" 
+                          size="130" minSize="70" maxSize="70">
+                <h:form>
+                    <p:menubar>
+                        <p:menuitem value="Principal" url="/paginas/admin/cleliaLogada.xhtml" icon="fa fa-fw fa-home" />
+
+                        <p:submenu label="Cadastros" icon="fa fa-fw fa-edit">
+                            <p:menuitem value="Livros" icon="fa fa-fw fa-book" url="/paginas/admin/livro.xhtml" />
+                            <p:separator />
+                            <p:menuitem value="Amigos" icon="fa fa-fw fa-user-plus" url="/paginas/admin/amigo.xhtml" />                                            
+                        </p:submenu>
+
+                        <p:submenu label="Movimentos" icon="fa fa-fw fa-refresh">
+                            <p:menuitem value="Empréstimos" icon="fa fa-fw fa-exchange" url="/paginas/admin/emprestimo.xhtml" />
+                        </p:submenu>
+
+                        <f:facet name="options">
+                            <p:inputText style="margin-right:10px" placeholder="buscar"/>
+                            <p:commandLink type="button" value="Sair da aplicação" 
+                                             action="#{loginMb.realizaLogout}"/>
+                        </f:facet>
+                    </p:menubar>
+                </h:form>
+
+            </p:layoutUnit>
+
+            <p:layoutUnit position="center" style="border: 0px solid white;">
+                <div id="conteudoCentro" style="height: 100%">
+                    <ui:insert name="conteudo" />
+                </div>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="south" resizable="true" size="40" minSize="40" maxSize="40"
+                          style="border: 0px solid white;">		    	
+                <p:outputLabel style="font-size: 12px; float: right;" 
+                               value="Copyright 2016. Todos os Direitos reservados a Thiago Silveira."/>
+            </p:layoutUnit>
+
+        </p:layout>
+
+    </h:body>
+</html>
+

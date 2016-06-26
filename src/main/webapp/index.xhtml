@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Biblioteca da Vovó</title>
+	<link rel="StyleSheet" type="text/css" href="CSS/style.css"
+		media="screen" />
+</h:head>
+<h:body>
+	<div align="right">
+		
+		<h:form id="formLogin" prependId="false">
+			<p:growl id="growl" showDetail="true" sticky="false" life="4000" />
+			<p:outputLabel for="login" value="Login: " />
+
+			<p:inputText id="login" requiredMessage="Campo obrigatório"
+				required="true" value="#{loginMb.login}" />
+
+			<p:outputLabel for="senha" value="Senha: " />
+
+			<p:password id="senha" requiredMessage="Campo obrigatório"
+				required="true" value="#{loginMb.senha}" />
+
+			<p:commandButton value="logar" action="#{loginMb.logar}"
+				process="@form" update="@form" />
+			<br />
+		</h:form>
+		<p:messages>
+		</p:messages>
+	</div>
+</h:body>
+</html>
+

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/modelos/padrao.xhtml">
+	<ui:define name="conteudo">
+		<p:layout>
+			<p:layoutUnit position="north" style="text-align: center;">
+				<p:outputLabel style="font-size: 30px;" value="Cadastro de Amigos" />
+			</p:layoutUnit>
+
+			<p:layoutUnit position="center">
+
+				<h:form id="amigoForm">
+					<p:growl id="growl" showDetail="true" sticky="false" life="4000" />
+
+					<p:panelGrid columns="3">
+
+						<p:outputLabel for="sexo" value="Sexo:" />
+						<p:selectOneRadio id="sexo" requiredMessage="Campo obrigatório"
+							required="true" value="#{pessoaMb.amigo.sexo}">
+							<f:selectItem itemLabel="Masculino" itemValue="Masculino" />
+							<f:selectItem itemLabel="Feminino" itemValue="Feminino" />
+						</p:selectOneRadio>
+						<p:message for="sexo" />
+						
+						<p:outputLabel for="campoId" value="ID: "/>
+						<p:inputText id="campoId" readonly="true" placeholder="Não Preenchido" 
+							value="#{pessoaMb.amigo.id}"/>
+						<p:outputLabel style="color: red;" value="Campo não deve ser Preenchido"/>
+
+						<p:outputLabel for="nome" value="Nome:" />
+						<p:inputText id="nome" requiredMessage="Campo obrigatório"
+							required="true" value="#{pessoaMb.amigo.nome}" />
+						<p:message for="nome" />
+
+						<p:outputLabel for="telefone" value="Telefone:" />
+						<p:inputMask id="telefone" mask="(99) 9999-9999"
+							requiredMessage="Campo obrigatório" required="true"
+							value="#{pessoaMb.amigo.telefone}" />
+						<p:message for="telefone" />
+
+						<p:outputLabel for="email" value="Email: " />
+						<p:inputText id="email" value="#{pessoaMb.amigo.email}">
+							<f:validator validatorId="emailValidator" />
+						</p:inputText>
+						<p:message for="email" />
+
+						<p:outputLabel for="login" value="Login de Acesso:" />
+						<p:inputText id="login" requiredMessage="Campo obrigatório"
+							required="true" value="#{pessoaMb.amigo.login}" />
+						<p:message for="login" />
+
+						<h:outputLabel for="senha1" value="Senha:" />
+						<p:password id="senha1" placeholder="Senha"
+							value="#{pessoaMb.amigo.senha}"
+							validatorMessage="Senhas devem ser iguais"
+							promptLabel="Use letras e números" weakLabel="Segurança fraca"
+							goodLabel="Segurança média" strongLabel="Segurança forte"
+							match="senha2" label="Senha: " required="true" feedback="true"
+							inline="true" />
+						<p:message for="senha1" />
+
+						<h:outputLabel for="senha2" value="Repita a senha:" />
+						<p:password id="senha2" placeholder="Repita a senha"
+							value="#{pessoaMb.amigo.senha}" label="Repita a senha: "
+							required="true" inline="true" />
+						<p:message for="senha2" />
+
+					</p:panelGrid>
+
+					<p:commandButton value="Salvar" process="@form"
+						update="tabelaDeAmigos" action="#{pessoaMb.salvar()}"
+						icon="fa fa-fw fa-save" />
+					<p:commandButton value="Limpar" process="@this" update="@form"
+						action="#{pessoaMb.limpar()}" icon="fa fa-fw fa-eraser" />
+
+					<p:dataTable id="tabelaDeAmigos" var="amigo"
+						value="#{pessoaMb.lista}"
+						emptyMessage="Não existem amigos cadastradas"
+						style="padding-top:20px;">
+						<p:column headerText="Id" width="20" style="text-align: right">
+							<h:outputText value="#{amigo.id}" />
+						</p:column>
+						<p:column headerText="Nome" style="text-align: center">
+							<h:outputText value="#{amigo.nome}" />
+						</p:column>
+						<p:column headerText="Telefone" width="150">
+							<h:outputText value="#{amigo.telefone}" />
+						</p:column>
+						<p:column headerText="Email" width="350">
+							<h:outputText value="#{amigo.email}" />
+						</p:column>
+						<p:column headerText="Sexo" width="100">
+							<h:outputText value="#{amigo.sexo}" />
+						</p:column>
+						<p:column headerText="Ações" style="text-align: center"
+							width="100">
+
+							<p:commandButton icon="fa fa-fw fa-edit" title="Editar Amigo"
+								update="@form" process="@this"
+								action="#{pessoaMb.setAmigo(amigo)}" />
+							<p:commandButton icon="fa fa-fw fa-trash" title="Deletar Cliente"
+								update="tabelaDeAmigos"
+								action="#{pessoaMb.deletarAmigo(amigo)}">
+								<p:confirm header="Confirmação"
+									message="Deseja deletar essa Cliente?" icon="ui-icon-alert" />
+							</p:commandButton>
+
+							<p:confirmDialog global="true" showEffect="fade"
+								hideEffect="fade">
+								<p:commandButton value="Sim" type="button"
+									styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+								<p:commandButton value="Não" type="button"
+									styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+							</p:confirmDialog>
+
+						</p:column>
+					</p:dataTable>
+				</h:form>
+
+			</p:layoutUnit>
+
+		</p:layout>
+	</ui:define>
+</ui:composition>
+
+</html>
