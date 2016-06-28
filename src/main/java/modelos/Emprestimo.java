@@ -41,6 +41,7 @@ public class Emprestimo implements Serializable {
 	@Convert(converter = ConversorDeLocalDate.class)
     private LocalDate dataEmprestimo;
     @Convert(converter = ConversorDeLocalDate.class)
+    @Column(nullable=true)
     private LocalDate dataDevolucao;
     @Column(nullable=false)
     private boolean emprestimoAtivo;
@@ -103,8 +104,8 @@ public class Emprestimo implements Serializable {
         return emprestimoAtivo;
     }
     
-    public String getEmprestimoAtivoString(){
-        if(emprestimoAtivo)return "Ativo";
+    public String getEmprestimoAtivoString(){    	
+    	if(emprestimoAtivo)return "Ativo";
         else return "Devolvido";
     }
 
@@ -117,7 +118,11 @@ public class Emprestimo implements Serializable {
     }
     
     public String getDataDevolucaoString(){
-        return dataDevolucao.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    	if(dataDevolucao != null){    		
+    		return dataDevolucao.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    	}else {
+    		return "Ainda não foi devolvido";
+    	}
     }
 
     @Override

@@ -6,6 +6,12 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
+<head>
+	<h:outputScript library="js" name="buscaEndereco.js" />
+	<h:outputScript library="js" name="jquery-3.0.0.js" />
+	<h:outputScript library="js" name="jquery-3.0.0.min.js" />
+</head>
+
 <ui:composition template="/WEB-INF/modelos/padrao.xhtml">
 	<ui:define name="conteudo">
 		<p:layout>
@@ -42,7 +48,8 @@
 						<p:inputMask id="telefone" mask="(99) 9999-9999"
 							requiredMessage="Campo obrigatório" required="true"
 							value="#{pessoaMb.amigo.telefone}" />
-						<p:message for="telefone" />
+						<p:message for="telefone" />			
+						
 
 						<p:outputLabel for="email" value="Email: " />
 						<p:inputText id="email" value="#{pessoaMb.amigo.email}">
@@ -74,7 +81,7 @@
 					</p:panelGrid>
 
 					<p:commandButton value="Salvar" process="@form"
-						update="tabelaDeAmigos" action="#{pessoaMb.salvar()}"
+						update="tabelaDeAmigos" action="#{pessoaMb.salvar}"
 						icon="fa fa-fw fa-save" />
 					<p:commandButton value="Limpar" process="@this" update="@form"
 						action="#{pessoaMb.limpar()}" icon="fa fa-fw fa-eraser" />

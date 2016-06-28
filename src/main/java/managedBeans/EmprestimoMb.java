@@ -1,6 +1,5 @@
 package managedBeans;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -19,14 +18,9 @@ import util.DateUtil;
 
 @Named(value = "emprestimoMb")
 @RequestScoped
-public class EmprestimoMb implements Serializable{
+public class EmprestimoMb {
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
-	private Emprestimo emprestimo;	
+    private Emprestimo emprestimo;	
     private List<Emprestimo> listaDeEmprestimo; 
     private Date empDataTemp, devDateTemp;
     
@@ -41,6 +35,8 @@ public class EmprestimoMb implements Serializable{
     public void salvar() {
     	if(emprestimo.getId() == null){
     		convertDateToLocalDate();
+    		emprestimo.setEmprestimoAtivo(true);
+    		emprestimo.getLivro().setEmprestado(true);
     		listaDeEmprestimo.add(emprestimo);
     		repositorioEmprestimo.inserir(emprestimo);
 //    		limpar();    		

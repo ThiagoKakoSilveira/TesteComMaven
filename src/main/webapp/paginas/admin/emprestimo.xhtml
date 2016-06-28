@@ -20,6 +20,14 @@
 				<h:form id="emprestimoForm">
 					<p:growl id="growl" showDetail="true" sticky="false" life="4000" />
 
+					<p:outputLabel for="btnModalLivro" value="Escolha o livro: " />
+					<p:panel>
+						<p:commandButton value="Selecionar Livros" id="btnModalLivro"
+							oncomplete="PF('dialogLivro').show();" />
+						<p:outputLabel id="teste" value="#{emprestimoMb.emprestimo.livro.titulo}" />
+					</p:panel>
+					<ui:include src="selecao_de_livros.xhtml" />
+					
 					<p:panelGrid columns="3">
 
 						<p:outputLabel for="amigoSelect" value="Amigo:" />
@@ -34,58 +42,51 @@
 
 						<p:outputLabel for="dataEmprestimo" value="Data de Empréstimo:" />
 						<p:calendar yearRange="1980:2040" id="dataEmprestimo"
-							navigator="true"
-							value="#{emprestimoMb.empDataTemp}"
+							navigator="true" value="#{emprestimoMb.empDataTemp}"
 							requiredMessage="Campo obrigatório" />
 						<p:message for="dataEmprestimo" />
 					</p:panelGrid>
 
-					<p:outputLabel for="btnModalLivro" value="Titulo dos livros" />
-					<p:panel>
-						<p:commandButton value="Selecionar Livros" id="btnModalLivro"
-							oncomplete="PF('dialogLivro').show();" />
-						<p:outputLabel value="#{emprestimoMb.emprestimo.livro.titulo}" />
-					</p:panel>
-					<ui:include src="selecao_de_livros.xhtml" />
 
 					<p:commandButton value="Salvar" process="@form"
-						update="@form tabelaDeEmprestimo" action="#{emprestimoMb.salvar}"
+						update="@form" action="#{emprestimoMb.salvar}"
 						icon="fa fa-fw fa-save" />
 					<p:commandButton value="Limpar" process="@this" update="@form"
 						action="#{emprestimoMb.limpar}" icon="fa fa-fw fa-eraser" />
-				</h:form>
-				<p:dataTable id="tabelaDeEmprestimo" var="emprestado"
-					value="#{emprestimoMb.listaDeEmprestimo}"
-					emptyMessage="Não existem empréstimos cadastrados"
-					style="padding-top:20px;">
-					<p:column headerText="Id" width="20" style="text-align: right">
-						<h:outputText value="#{emprestado.id}" />
-					</p:column>
-					<p:column headerText="Amigo">
-						<h:outputText value="#{emprestado.amigo.nome}" />
-					</p:column>
-					<p:column headerText="Título do Livro">
-						<h:outputText value="#{emprestado.livro.titulo}" />
-					</p:column>
-					<p:column headerText="Data de emprétimo" style="text-align: center"
-						width="100">
-						<h:outputText value="#{emprestado.dataEmprestimoString}" />
-					</p:column>
-					<p:column headerText="Data de Devolução" style="text-align: center"
-						width="100">
-						<h:outputText value="#{emprestado.dataDevolucaoString}" />
-					</p:column>
-					<p:column headerText="Emprestado" style="text-align: center"
-						width="100">
-						<h:outputText value="#{emprestado.emprestimoAtivoString}" />
-					</p:column>
-					<p:column headerText="Ações" style="text-align: center" width="100">
-						<h:form id="actionFormEmprestimo">
+
+					<p:dataTable id="tabelaDeEmprestimo" var="emprestado"
+						value="#{emprestimoMb.listaDeEmprestimo}"
+						emptyMessage="Não existem empréstimos cadastrados"
+						style="padding-top:20px;">
+						<p:column headerText="Id" width="20" style="text-align: right">
+							<h:outputText value="#{emprestado.id}" />
+						</p:column>
+						<p:column headerText="Amigo">
+							<h:outputText value="#{emprestado.amigo.nome}" />
+						</p:column>
+						<p:column headerText="Título do Livro">
+							<h:outputText value="#{emprestado.livro.titulo}" />
+						</p:column>
+						<p:column headerText="Data de emprétimo"
+							style="text-align: center" width="100">
+							<h:outputText value="#{emprestado.dataEmprestimoString}" />
+						</p:column>
+						<p:column headerText="Data de Devolução"
+							style="text-align: center" width="100">
+							<h:outputText value="#{emprestado.dataDevolucaoString}" />
+						</p:column>
+						<p:column headerText="Emprestado" style="text-align: center"
+							width="100">
+							<h:outputText value="#{emprestado.emprestimoAtivoString}" />
+						</p:column>
+						<p:column headerText="Ações" style="text-align: center"
+							width="100">
+
 							<p:commandButton icon="fa fa-fw fa-edit"
 								title="Editar Empréstimo" update="emprestimoForm"
 								action="#{emprestimoMb.setEmprestimo(emprestado)}" />
 							<p:commandButton icon="fa fa-fw fa-book" title="Devolver Livro"
-								update="tabelaDeEmprestimos emprestimoForm"
+								update="@form" process="@form"
 								rendered="#{emprestado.emprestimoAtivo}"
 								action="#{emprestimoMb.devolver(emprestado)}">
 								<p:confirm header="Confirmação"
@@ -99,9 +100,10 @@
 								<p:commandButton value="Não" type="button"
 									styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 							</p:confirmDialog>
-						</h:form>
-					</p:column>
-				</p:dataTable>
+
+						</p:column>
+					</p:dataTable>
+				</h:form>
 			</p:layoutUnit>
 		</p:layout>
 	</ui:define>
