@@ -4,7 +4,7 @@
 	bean-discovery-mode="all">
 	
 	<interceptors>
-		<class>transacao.TransacionalInterceptor</class>
+		<class>com.testecommaven.transacao.TransacionalInterceptor</class>
 	</interceptors>
 	
 </beans>

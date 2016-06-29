@@ -8,15 +8,15 @@
 
 		<jta-data-source>java:/jdbc/TesteDS</jta-data-source>
 		
-		<class>modelos.Livro</class>
-	    <class>modelos.Pessoa</class>
-	    <class>modelos.Emprestimo</class>
+		<class>com.testecommaven.modelos.Livro</class>
+	    <class>com.testecommaven.modelos.Pessoa</class>
+	    <class>com.testecommaven.modelos.Emprestimo</class>
 
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="false" />
-			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.hbm2ddl.auto" value="create" />
 		</properties>
 	</persistence-unit>
 
