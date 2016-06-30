@@ -1,5 +1,6 @@
 package managedBeans;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +20,9 @@ import util.DateUtil;
 @Named(value = "emprestimoMb")
 @RequestScoped
 public class EmprestimoMb {
-
+	
+	private final int SALVA = 1;	
+	private int controlador;
     private Emprestimo emprestimo;	
     private List<Emprestimo> listaDeEmprestimo; 
     private Date empDataTemp, devDateTemp;
@@ -34,7 +37,7 @@ public class EmprestimoMb {
 
     public void salvar() {
     	if(emprestimo.getId() == null){
-    		convertDateToLocalDate();
+    		convertDateToLocalDate(SALVA);
     		emprestimo.setEmprestimoAtivo(true);
     		emprestimo.getLivro().setEmprestado(true);
     		listaDeEmprestimo.add(emprestimo);
@@ -46,14 +49,17 @@ public class EmprestimoMb {
 					e = emprestimo;
 				}
 			}
+    		convertDateToLocalDate(SALVA);
     		repositorioEmprestimo.atualizar(emprestimo);
     	}
     }
     
-    private void convertDateToLocalDate(){
-    	
-    	emprestimo.setDataEmprestimo((DateUtil.dateToLocalDate(empDataTemp)));
-//    	emprestimo.setDataDevolucao(null); tem que fazer ainda
+    private void convertDateToLocalDate(int acao){
+    	if(acao == SALVA){
+    		emprestimo.setDataEmprestimo((DateUtil.dateToLocalDate(empDataTemp)));    		
+    	}else{
+    		emprestimo.setDataDevolucao((DateUtil.dateToLocalDate(devDateTemp)));    		
+    	}
     }
 
     public void deletar() {
@@ -65,7 +71,9 @@ public class EmprestimoMb {
     }
 
     public void devolver(Emprestimo emprestimo) {
-//        listaDeEmprestimo.devolver(emprestimo);
+    	emprestimo.setDataDevolucao(LocalDate.now());
+    	emprestimo.setEmprestimoAtivo(false);
+    	repositorioEmprestimo.atualizar(emprestimo);
         limpar();
     }
 
@@ -112,4 +120,16 @@ public class EmprestimoMb {
 	public void setDevDateTemp(Date devDateTemp) {
 		this.devDateTemp = devDateTemp;
 	}
+
+	public int getControlador() {
+		return controlador;
+	}
+
+	public void setControlador(int controlador) {
+		this.controlador = controlador;
+	}
+
+	public int getSALVA() {
+		return SALVA;
+	}	
 }

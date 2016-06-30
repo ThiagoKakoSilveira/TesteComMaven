@@ -51,6 +51,7 @@ public class Emprestimo implements Serializable {
 
     public Emprestimo(Integer id, Livro livro, Pessoa amigo, LocalDate dataEmprestimo, 
             LocalDate dataDevolucao, boolean emprestimoAtivo) {
+    	
         this.id = id;
         this.livro = livro;
         this.amigo = amigo;
